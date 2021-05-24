@@ -209,10 +209,12 @@ func (c *Cluster) HandleAdmin(w http.ResponseWriter, r *http.Request) {
 	// No error !! The
 	if errResponse == nil {
 		adminresp.Msg = fmt.Sprintf("Cluster %s : Admin Action  %s: OK", c.cfg.Name, bodyBuf.String())
+                c.log.Info().Msgf("Cluster %s : Admin Action  %s: OK", c.cfg.Name, bodyBuf.String())
 		// Failed to make any valid request...
 		relayctx.JsonResponse(w, r, 200, adminresp)
 		return
 	}
 	adminresp.Msg = fmt.Sprintf("Cluster %s : Admin Action  %s: ERROR on ", c.cfg.Name, bodyBuf.String(), errResponse.Serverid)
+        c.log.Info().Msgf("Cluster %s : Admin Action  %s: ERROR on ", c.cfg.Name, bodyBuf.String(), errResponse.Serverid)
 	relayctx.JsonResponse(w, r, http.StatusBadRequest, adminresp)
 }
